@@ -1,0 +1,44 @@
+type Post {
+    id: ID!
+    title: String!
+    text: String!
+    author: Author
+    categories: [String]
+    comments: [Comment]
+    created: String
+    updated: String
+}
+
+type Author {
+    id: ID!
+    accountId: String
+    comments: [Comment]
+    posts: [Post]
+}
+
+type Comment {
+    id: ID!
+    text: String
+    created: String
+    author: Author
+    post: Post
+}
+
+# The Root Query for the application
+type Query {
+    posts(page: Int, size: Int): [Post]!
+    post(id: ID): Post!
+
+    comment(id: ID):Comment!
+    comments:[Comment]!
+
+    author(id:ID):Author!
+    authors:[Author]!
+}
+
+# The Root Mutation for the application
+type Mutation {
+    upsertPost(title: String!, text: String!, authorId: String!, postId: String) : Post!
+    upsertAuthor(accountId: String!, authorId: String): Author!
+    upsertComment(text: String!, authorId: String!, postId: String!, commentId: String): Comment!
+}
